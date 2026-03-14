@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 # Try to get DATABASE_URL from environment, fallback to .env
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://postgres:RejCzSvKlMinyIBQpFNPTqahpiIoRViF@yamabiko.proxy.rlwy.net:18587/railway"
+    "postgresql://postgres:RejCzSvKlMinyIBQpFNPTqahpiIoRViF@postgres-unp0.railway.internal:5432/railway"
 )
 
 # Log database connection info (masked password)
