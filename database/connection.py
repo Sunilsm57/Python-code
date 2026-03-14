@@ -5,10 +5,18 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:zzIQdiQoTkiRQPKYmwAGBaoXWqNuJjHq@autorack.proxy.rlwy.net:19017/railway")
+# Try to get DATABASE_URL from environment, fallback to .env
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql://postgres:zzIQdiQoTkiRQPKYmwAGBaoXWqNuJjHq@autorack.proxy.rlwy.net:19017/railway"
+)
 
-load_dotenv(override=False)
+# Ensure the connection uses proper settings
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,  # Verify connection before using
+    pool_recycle=3600,   # Recycle connections every hour
+    echo=False           # Set to True for debugging
+)
 
-engine = create_engine(DATABASE_URL)
-
-SessionLocal = sessionmaker(bind=engine)
+SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
