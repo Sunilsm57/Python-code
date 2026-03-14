@@ -4,7 +4,6 @@
     "builder": "dockerfile"
   },
   "deploy": {
-    "startCommand": "uvicorn main:app --host 0.0.0.0 --port $PORT",
     "numReplicas": 1,
     "restartPolicyType": "ON_FAILURE",
     "healthchecks": {
