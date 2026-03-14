@@ -18,6 +18,8 @@ COPY . .
 # Expose port
 EXPOSE 8000
 
+# Remove .env so Railway environment variables take over
+RUN rm -f .env
 # Run the application
 CMD uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
 
