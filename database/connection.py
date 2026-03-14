@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:root@localhost:5432/testdb")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:zzIQdiQoTkiRQPKYmwAGBaoXWqNuJjHq@autorack.proxy.rlwy.net:19017/railway")
 
 engine = create_engine(DATABASE_URL)
 
