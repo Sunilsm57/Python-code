@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends,HTTPException
+from fastapi import APIRouter, Depends,HTTPException,BackgroundTasks
 from auth.auth import create_access_token,verify_token
 from sqlalchemy.orm import Session
 from database.connection import SessionLocal
@@ -6,6 +6,7 @@ from schemas.user_schema import UserCreate,Login
 from services.user_services import get_users, create_user,get_user_by_id,update_user,delete_user
 from models.user_model import User
 from utils.security import verify_password
+from services.email_services import send_registration_email
 
 router = APIRouter()
 
@@ -40,8 +41,10 @@ def read_users(db: Session = Depends(get_db),current_user = Depends(verify_token
     return get_users(db)
 
 @router.post("/users")
-def add_user(user: UserCreate, db: Session = Depends(get_db)):
-    return create_user(db, user)
+def add_user(user: UserCreate,background_tasks:BackgroundTasks, db: Session = Depends(get_db)):
+    new_user = create_user(db, user)
+    background_tasks.add_task(send_registration_email, user.email, user.username)
+    return new_user
 
 @router.get("/users/{id}")
 def getUserById(id: int, db: Session = Depends(get_db)):

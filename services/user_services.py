@@ -12,7 +12,6 @@ def create_user(db, user):
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    send_registration_email(user.email, user.username)
     return new_user
 
 def get_user_by_id(db, id):
